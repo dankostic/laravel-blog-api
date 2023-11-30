@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-trait AuthResponse
+trait AuthResponseTrait
 {
     /**
      * @param string $token
@@ -17,16 +19,6 @@ trait AuthResponse
         return new JsonResponse([
             'token' => $token
         ], $status);
-    }
-
-    /**
-     * @return JsonResponse
-     */
-    public function unauthorized(): JsonResponse
-    {
-        return new JsonResponse([
-            'message' => 'You are not authorized'
-        ], Response::HTTP_UNAUTHORIZED);
     }
 
     /**

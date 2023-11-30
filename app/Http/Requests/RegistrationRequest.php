@@ -1,15 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
-use App\Traits\ValidationException;
-use Illuminate\Contracts\Validation\Validator;
+use App\Traits\ValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
-class UserLoginRequest extends FormRequest
+class RegistrationRequest extends FormRequest
 {
-    use ValidationException;
+    use ValidationTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -26,16 +29,18 @@ class UserLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required',
-            'password' => 'required'
+            'name' => 'required|string|max:250',
+            'email' => 'required|email|max:250|unique:users',
+            'password' => 'required|min:8'
         ];
     }
 
     /**
      * @param Validator $validator
-     * @return HttpResponseException
+     * @return JsonResponse
+     * @throws ValidationException
      */
-    public function failedValidation(Validator $validator): HttpResponseException
+    public function failedValidation(Validator $validator): JsonResponse
     {
         return $this->failedValidationResponse($validator);
     }

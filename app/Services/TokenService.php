@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Enums\AuthEnum;
+use App\Interfaces\TokenServiceInterface;
 use App\Models\User;
 
-class TokenService
+class TokenService implements TokenServiceInterface
 {
     /**
      * @param User $user
