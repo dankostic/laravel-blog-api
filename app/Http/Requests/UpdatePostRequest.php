@@ -8,7 +8,6 @@ use App\Interfaces\PostRepositoryInterface;
 use App\Traits\ValidationTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -36,11 +35,11 @@ class UpdatePostRequest extends FormRequest
 
     /**
      * @param Validator $validator
-     * @return JsonResponse
+     * @return void
      * @throws ValidationException
      */
-    public function failedValidation(Validator $validator): JsonResponse
+    public function failedValidation(Validator $validator): void
     {
-        return $this->failedValidationResponse($validator);
+        $this->failedValidationResponse($validator);
     }
 }

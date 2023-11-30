@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use App\Interfaces\PostRepositoryInterface;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -12,10 +11,10 @@ trait ValidationTrait
 {
     /**
      * @param Validator $validator
-     * @return JsonResponse
+     * @return void
      * @throws ValidationException
      */
-    public function failedValidationResponse(Validator $validator): JsonResponse
+    public function failedValidationResponse(Validator $validator): void
     {
         throw ValidationException::withMessages([
             'success' => false,
