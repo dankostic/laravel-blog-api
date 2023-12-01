@@ -34,7 +34,6 @@ class CreatePostRequest extends FormRequest
         return [
             'title' => 'required|max:100',
             'content' => 'required|max:2000',
-            'slug' => 'required|max:100|unique:posts',
         ];
     }
 

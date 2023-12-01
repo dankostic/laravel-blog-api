@@ -28,6 +28,22 @@ class PostController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/posts",
+     *     tags={"Posts"},
+     *     operationId="postIndex",
+     *     summary="Get all posts for REST API",
+     *     description="Get all posts for REST API",
+     *     security={{"passport":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid status value"
+     *     )
+     * )
      * @return PostCollection
      */
     public function index(): PostCollection
@@ -36,6 +52,50 @@ class PostController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/api/posts",
+     *     tags={"Posts"},
+     *     operationId="postStore",
+     *     summary="Store post",
+     *     description="Store post",
+     *     security={{"passport":{}}},
+     *     @OA\RequestBody(
+     *          description="Store post",
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *             @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="title",
+     *                      description="Post title",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="content",
+     *                      description="Post content",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                       property="slug",
+     *                       description="Post slug",
+     *                       type="string"
+     *                   ),
+     *                  required={"title", "content"}
+     *              )
+     *          ),
+     *      ),
+     *     @OA\Response(
+     *         response="201",
+     *         description="Successfully created",
+     *          @OA\JsonContent()
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Content",
+     *              @OA\JsonContent(),
+     *      )
+     * )
      * @param CreatePostRequest $createPostRequest
      * @return PostResource
      */
@@ -45,6 +105,35 @@ class PostController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/api/posts/{id}",
+     *     tags={"Posts"},
+     *     operationId="postShow",
+     *     summary="Get Post Details",
+     *     description="Get Post Details",
+     *     security={ {"passport": {} }},
+     *     @OA\Parameter(
+     *        description="ID of Post",
+     *        in="path",
+     *        name="id",
+     *        required=true,
+     *        example="1",
+     *    @OA\Schema(
+     *       type="integer",
+     *       format="int64"
+     *    )
+     * ),
+     *     @OA\Response(
+     *           response="200",
+     *           description="Successful operation",
+     *            @OA\JsonContent()
+     *        ),
+     *      @OA\Response(
+     *           response=404,
+     *           description="Record not found",
+     *               @OA\JsonContent(),
+     *       )
+     * )
      * @param Post $post
      * @return PostResource
      */
@@ -54,6 +143,58 @@ class PostController extends Controller
     }
 
     /**
+     * @OA\Patch(
+     *     path="/api/posts/{id}",
+     *     tags={"Posts"},
+     *     operationId="postUpdate",
+     *     summary="Update post",
+     *     description="Update post",
+     *     security={{"passport":{}}},
+     *      @OA\Parameter(
+     *         description="ID of Post",
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         example="1",
+     *     @OA\Schema(
+     *        type="integer",
+     *        format="int64"
+     *     )
+     *  ),
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\MediaType(
+     *       mediaType="application/json",
+     *       @OA\Schema(
+     *         @OA\Property(
+     *           property="slug",
+     *           description="Update slug",
+     *           type="string",
+     *         ),
+     *       ),
+     *     ),
+     *   ),
+     *     @OA\Response(
+     *            response="200",
+     *            description="Successful operation",
+     *             @OA\JsonContent()
+     *         ),
+     *       @OA\Response(
+     *            response=404,
+     *            description="Record not found",
+     *                @OA\JsonContent(),
+     *        ),
+     *       @OA\Response(
+     *             response=403,
+     *             description="Error: Forbidden",
+     *                 @OA\JsonContent(),
+     *         ),
+     *       @OA\Response(
+     *           response=422,
+     *           description="Unprocessable Content",
+     *               @OA\JsonContent(),
+     *       )
+     * )
      * @param UpdatePostRequest $updatePostRequest
      * @param Post $post
      * @return PostResource
@@ -67,6 +208,40 @@ class PostController extends Controller
     }
 
     /**
+     * @OA\Delete(
+     *     path="/api/posts/{id}",
+     *     tags={"Posts"},
+     *     operationId="postDelete",
+     *     summary="Delete Post",
+     *     description="Delete Post",
+     *     security={ {"passport": {} }},
+     *     @OA\Parameter(
+     *        description="ID of Post",
+     *        in="path",
+     *        name="id",
+     *        required=true,
+     *        example="1",
+     *    @OA\Schema(
+     *       type="integer",
+     *       format="int64"
+     *    )
+     * ),
+     *     @OA\Response(
+     *           response="204",
+     *           description="No content",
+     *            @OA\JsonContent()
+     *        ),
+     *     @OA\Response(
+     *              response=403,
+     *              description="Error: Forbidden",
+     *                  @OA\JsonContent(),
+     *          ),
+     *      @OA\Response(
+     *           response=404,
+     *           description="Record not found",
+     *               @OA\JsonContent(),
+     *       )
+     * )
      * @param Post $post
      * @return JsonResponse
      * @throws AuthorizationException
