@@ -27,4 +27,4 @@ After deploy is finished type: `docker-compose run --rm artisan migrate` && `doc
 To run tests type: `docker-compose run --rm artisan test`
 
 Additional Swagger documentation for endpoints is added, if you want to access it type: `docker-compose run --rm artisan l5-swagger:generate`
-and hit [localhost:483/api/documentation]() page.
+and hit http://localhost:483/api/documentation
